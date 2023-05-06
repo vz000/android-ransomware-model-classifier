@@ -9,6 +9,7 @@ try:
     apk_list = os.listdir(apk_path)
     for apk in apk_list:
         result.append(launch(apk_path+apk))
+    print("\n\nRESULT: ")
     print(result)
 
 except IndexError:
