@@ -7,7 +7,7 @@ This model helps to identify ransomware applications for Android.
 ```
 pip install virtualenv
 python - venv <virtual-env-name>
-.<virtual-env-name>/Scripts/activate
+./<virtual-env-name>/Scripts/activate
 ```
 3. Install maturin to run Rust.
 ```
