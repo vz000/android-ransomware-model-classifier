@@ -27,4 +27,4 @@ It is recommended to place the folder at the same level as `files`.
 For more details about dynamic data extraction, see: [automated-execution](https://github.com/vz000/automated-execution)
 
 ## Notes
-* Data, such as applications and system call logs, are not provided.
+* Data, such as applications and system call logs, is not provided.
