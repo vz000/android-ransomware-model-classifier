@@ -22,11 +22,8 @@ fn launch_device(emulator_output: String) -> String {
     } else {
         let avd_name = format!("{}",emulator_output.trim());
         let avd_name_out = emulator_output.trim().clone();
-        let handle_launch = thread::spawn(|| { 
-            Command::new("emulator").arg("-avd").arg(avd_name).arg("-wipe-data").spawn().unwrap();
-            thread::sleep(Duration::from_secs(40)); // This time may vary depending on the computer specs.
-        });
-        handle_launch.join().unwrap();
+        Command::new("emulator").arg("-avd").arg(avd_name).arg("-wipe-data").spawn().unwrap();
+        thread::sleep(Duration::from_secs(50)); // This time may vary depending on the computer specs.
         avd_name_out.to_string()
     };
     avd
@@ -43,29 +40,20 @@ fn add_files() {
 }
 
 #[pyfunction]
-fn start_analysis() {
-    let paths = fs::read_dir("./packages/").unwrap();
+fn start_analysis(apk_path_name: String) {
+    launch_device(get_avd_name());
 
-    for path in paths {
-        launch_device(get_avd_name());
-        let handle_boot = thread::spawn(|| {
-            Command::new("adb").arg("root").spawn().unwrap(); // Start as root
-            thread::sleep(Duration::from_secs(5));
-        });
-        handle_boot.join().unwrap();
-        add_files();
-        let apk = path.unwrap().path().display().to_string();
-        let apk_path = apk.clone();
-        println!("Package {} to be installed.", apk);
-        let handle_install = thread::spawn(|| { 
-            Command::new("adb").arg("install").arg(apk).spawn().unwrap();
-            thread::sleep(Duration::from_secs(1)); // Give 5 seconds for app to be installed.
-        });
-        handle_install.join().unwrap();
-        execute_apk(apk_path);
-        Command::new("adb").arg("emu").arg("kill").spawn().unwrap();
-        thread::sleep(Duration::from_secs(10));
-    }
+    Command::new("adb").arg("root").spawn().unwrap(); // Start as root
+    thread::sleep(Duration::from_secs(5));
+
+    add_files();
+    let apk_path = apk_path_name.clone();
+    println!("Package {} to be installed.", apk_path_name);
+    Command::new("adb").arg("install").arg(apk_path).spawn().unwrap();
+    thread::sleep(Duration::from_secs(1)); // Give 5 seconds for app to be installed.
+    execute_apk(apk_path_name);
+    Command::new("adb").arg("emu").arg("kill").spawn().unwrap();
+    thread::sleep(Duration::from_secs(10));
 }
 
 fn execute_apk(apk_path: String) {
