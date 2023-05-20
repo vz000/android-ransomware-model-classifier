@@ -1,3 +1,4 @@
+# Recommended use
 from main import launch
 import sys
 import os
