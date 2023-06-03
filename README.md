@@ -4,11 +4,18 @@ This model helps to identify ransomware applications for Android.
 ## How to use
 1. Rust (version >= 1.68) and Python (version >= 3.9) must be installed.
 2. Create a virtual environment:
-```
-pip install virtualenv
-python -m venv <virtual-env-name>
-./<virtual-env-name>/Scripts/activate
-```
+   ```
+   pip install virtualenv
+   python -m venv <virtual-env-name>
+   ```
+   Windows:
+   ```
+   ./<virtual-env-name>/Scripts/activate
+   ```
+   Linux:
+   ```
+   source <virtual-env-name>/bin/activate
+   ```
 3. Install maturin to run Rust.
 ```
 pip install maturin
