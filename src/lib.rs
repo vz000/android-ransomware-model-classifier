@@ -9,7 +9,7 @@ use pyo3::prelude::*;
 const FILES_PATH: &str = "storage/self/primary/Download/";
 
 fn get_avd_name() -> String {
-    let emulator = Command::new("emulator").arg("-list-avds").stdout(Stdio::piped())
+    let emulator = Command::new("./Android/Sdk/emulator/emulator").arg("-list-avds").stdout(Stdio::piped())
     .output().expect("\'emulator\' was not found.");
     let avd_name = String::from_utf8_lossy(&emulator.stdout).to_string();
     avd_name.trim().to_string()
@@ -22,7 +22,7 @@ fn launch_device(emulator_output: String) -> String {
     } else {
         let avd_name = format!("{}",emulator_output.trim());
         let avd_name_out = emulator_output.trim().clone();
-        Command::new("emulator").arg("-avd").arg(avd_name).arg("-wipe-data").spawn().unwrap();
+        Command::new("./Android/Sdk/emulator/emulator").arg("-avd").arg(avd_name).arg("-wipe-data").spawn().unwrap();
         thread::sleep(Duration::from_secs(50)); // This time may vary depending on the computer specs.
         avd_name_out.to_string()
     };
