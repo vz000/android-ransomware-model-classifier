@@ -1,5 +1,6 @@
 # Ransomware detection model
 This model helps to identify ransomware applications for Android.
+This is the trained version and includes the files needed to classify .apk samples.
 
 ## How to use
 1. Rust (version >= 1.68) and Python (version >= 3.9) must be installed.
